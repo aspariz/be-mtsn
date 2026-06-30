@@ -12,12 +12,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
 // Health Check
 app.get("/", (req, res) => {
-res.send("Server is running...");
+    res.send("Server is running...");
 });
 
 // Auth Routes
@@ -31,7 +31,7 @@ app.use("/api/berita", beritaRoutes);
 
 // Start Server
 app.listen(port, () => {
-console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running at http://localhost:${port}`);
 });
 
 export default app;
