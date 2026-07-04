@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
 import beritaRoutes from "./routes/beritaRoute";
 import categoryRoutes from "./routes/categoryRoute";
+import uploadRoutes from "./routes/uploadRoutes";
 
 dotenv.config();
 
@@ -28,6 +29,12 @@ app.use("/api/kategori", categoryRoutes);
 
 // Berita Routes
 app.use("/api/berita", beritaRoutes);
+
+// Sajikan folder public/uploads sebagai file statis
+app.use("/uploads", express.static("public/uploads"));
+
+// Route upload
+app.use("/api/upload", uploadRoutes);
 
 // Start Server
 app.listen(port, () => {
