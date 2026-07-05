@@ -115,7 +115,7 @@ export const login = async (
       },
       process.env.JWT_SECRET as string,
       {
-        expiresIn: "5d",
+        expiresIn: "2d",
       }
     );
 
