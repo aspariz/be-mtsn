@@ -16,10 +16,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors({ origin: "http://localhost:5173" }));
-app.use(express.json());
-
-// Health Check
 app.use(cors({
     origin: [
         'http://localhost:5173',
@@ -27,6 +23,12 @@ app.use(cors({
     ],
     credentials: true
 }));
+app.use(express.json());
+
+// Health Check
+app.get("/", (req, res) => {
+    res.send("Server MTSN Kota Tegal is Running...");
+});
 
 // Auth Routes
 app.use("/api/auth", authRoutes);
