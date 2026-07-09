@@ -44,7 +44,7 @@ const { slug } = req.params;
 
   const berita = await prisma.berita.findUnique({
     where: {
-      slug,
+      slug: slug as string,
     },
     include: {
       kategori: true,

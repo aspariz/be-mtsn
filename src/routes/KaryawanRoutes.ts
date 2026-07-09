@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { KaryawanController } from "../controller/KaryawanController";
+import { KaryawanController } from "../controller/karyawanController";
 import { authenticate } from "../middlewares/authMiddleware";
 import { upload } from "../middlewares/uploadMiddleware";
 
