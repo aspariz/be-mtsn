@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { GuruController } from "../controller/GuruController";
+import { GuruController } from "../controller/guruController";
 import { authenticate } from "../middlewares/authMiddleware";
 import { upload } from "../middlewares/uploadMiddleware";
 
