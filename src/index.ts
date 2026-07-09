@@ -21,7 +21,7 @@ app.use(express.json());
 
 // Health Check
 app.get("/", (req, res) => {
-    res.send("Server is running...");
+    res.send("Server MTSN Kota Tegal is Running...");
 });
 
 // Auth Routes
