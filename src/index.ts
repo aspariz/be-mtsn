@@ -7,6 +7,9 @@ import beritaRoutes from "./routes/beritaRoute";
 import categoryRoutes from "./routes/categoryRoute";
 import uploadRoutes from "./routes/uploadRoutes";
 
+import guruRoutes from "./routes/GuruRoutes";
+import karyawanRoutes from "./routes/KaryawanRoutes";
+
 dotenv.config();
 
 const app = express();
@@ -35,6 +38,13 @@ app.use("/uploads", express.static("public/uploads"));
 
 // Route upload
 app.use("/api/upload", uploadRoutes);
+
+// Route Guru
+app.use("/api/guru", guruRoutes);
+
+// Route Karyawan
+app.use("/api/karyawan", karyawanRoutes);
+
 
 // Start Server
 app.listen(port, () => {
