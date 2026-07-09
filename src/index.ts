@@ -20,9 +20,13 @@ app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
 // Health Check
-app.get("/", (req, res) => {
-    res.send("Server MTSN Kota Tegal is Running...");
-});
+app.use(cors({
+    origin: [
+        'http://localhost:5173',
+        'https://web-profile-mtsn-kota-tegal.vercel.app' // URL Frontend produksi Anda
+    ],
+    credentials: true
+}));
 
 // Auth Routes
 app.use("/api/auth", authRoutes);
