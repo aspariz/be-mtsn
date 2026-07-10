@@ -18,7 +18,7 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(cors({
     origin: [
-        'http://localhost:5173',
+        // 'http://localhost:5173',
         'https://www.mtsnkotategal.site',
         'https://mtsnkotategal.site',
         'https://mtsn-kotategal.vercel.app' // URL Frontend produksi Anda
@@ -42,7 +42,7 @@ app.use("/api/kategori", categoryRoutes);
 app.use("/api/berita", beritaRoutes);
 
 // Sajikan folder public/uploads sebagai file statis
-app.use("/uploads", express.static("public/uploads"));
+// app.use("/uploads", express.static("public/uploads"));
 
 // Route upload
 app.use("/api/upload", uploadRoutes);

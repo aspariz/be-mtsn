@@ -1,23 +1,44 @@
 import { Request, Response } from "express";
-import path from "path";
-import fs from "fs";
+import { createClient } from "@supabase/supabase-js";
 
-export const uploadImage = (req: Request, res: Response): void => {
+const supabase = createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
+const BUCKET = "uploads";
+
+export const uploadImage = async (req: Request, res: Response): Promise<void> => {
     try {
         if (!req.file) {
             res.status(400).json({ success: false, message: "Tidak ada file yang diupload." });
             return;
         }
 
-        // Bangun URL publik berdasarkan BASE_URL di .env
-        const baseUrl = process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}`;
-        const fileUrl = `${baseUrl}/uploads/${req.file.filename}`;
+        const ext = req.file.originalname.split(".").pop();
+        const fileName = `${Date.now()}-${Math.round(Math.random() * 1e6)}.${ext}`;
+
+        const { error } = await supabase.storage
+            .from(BUCKET)
+            .upload(fileName, req.file.buffer, {
+                contentType: req.file.mimetype,
+            });
+
+        if (error) {
+            console.error("Supabase upload error:", error);
+            res.status(500).json({ success: false, message: "Gagal mengupload ke storage." });
+            return;
+        }
+
+        const { data: publicUrlData } = supabase.storage
+            .from(BUCKET)
+            .getPublicUrl(fileName);
 
         res.status(200).json({
             success: true,
             message: "Gambar berhasil diupload.",
-            url: fileUrl,
-            filename: req.file.filename,
+            url: publicUrlData.publicUrl,
+            filename: fileName,
         });
     } catch (error) {
         console.error("Upload error:", error);
@@ -25,20 +46,18 @@ export const uploadImage = (req: Request, res: Response): void => {
     }
 };
 
-export const deleteImage = (req: Request, res: Response): void => {
+export const deleteImage = async (req: Request, res: Response): Promise<void> => {
     try {
         const { filename } = req.params as { filename: string };
 
-        // Cegah path traversal
-        const safeName = path.basename(filename);
-        const filePath = path.join(process.cwd(), "public", "uploads", safeName);
+        const { error } = await supabase.storage.from(BUCKET).remove([filename]);
 
-        if (!fs.existsSync(filePath)) {
-            res.status(404).json({ success: false, message: "File tidak ditemukan." });
+        if (error) {
+            console.error("Supabase delete error:", error);
+            res.status(500).json({ success: false, message: "Gagal menghapus dari storage." });
             return;
         }
 
-        fs.unlinkSync(filePath);
         res.status(200).json({ success: true, message: "Gambar berhasil dihapus." });
     } catch (error) {
         console.error("Delete error:", error);
