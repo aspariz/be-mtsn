@@ -19,8 +19,8 @@ const port = process.env.PORT || 3000;
 app.use(cors({
     origin: [
         'http://localhost:5173',
-        'https://www.mtsnkotategal.site/',
-        'mtsnkotategal.site/' // URL Frontend produksi Anda
+        'https://www.mtsnkotategal.site',
+        'https://mtsnkotategal.site' // URL Frontend produksi Anda
     ],
     credentials: true
 }));
