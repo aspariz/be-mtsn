@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
-    process.env.VITE_SUPABASE_URL!,
-    process.env.VITE_SUPABASE_SERVICE_ROLE!
+    process.env.VITE_SUPABASE_URL!.trim(),
+    process.env.VITE_SUPABASE_SERVICE_ROLE!.trim()
 );
 
 const BUCKET = "uploads";
