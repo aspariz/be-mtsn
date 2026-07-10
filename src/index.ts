@@ -20,7 +20,8 @@ app.use(cors({
     origin: [
         'http://localhost:5173',
         'https://www.mtsnkotategal.site',
-        'https://mtsnkotategal.site' // URL Frontend produksi Anda
+        'https://mtsnkotategal.site',
+        'https://mtsn-kotategal.vercel.app' // URL Frontend produksi Anda
     ],
     credentials: true
 }));
