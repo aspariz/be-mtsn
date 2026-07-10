@@ -10,6 +10,8 @@ const BUCKET = "uploads";
 
 export const uploadImage = async (req: Request, res: Response): Promise<void> => {
     try {
+        console.log("DEBUG URL:", JSON.stringify(process.env.VITE_SUPABASE_URL));
+        console.log("DEBUG BUCKET:", JSON.stringify(BUCKET));
         if (!req.file) {
             res.status(400).json({ success: false, message: "Tidak ada file yang diupload." });
             return;
